@@ -1,0 +1,15 @@
+DirectoryIndex index.php index.html
+
+<VirtualHost *:80>
+  ServerName {{ hostnames[0] }}.test
+{% for hostname in hostnames %}
+  ServerAlias {{ hostname }}
+{% endfor %}
+  DocumentRoot "/var/www/drupal/web"
+
+  <Directory "/var/www/drupal/web">
+    AllowOverride All
+    Options -Indexes +FollowSymLinks
+    Require all granted
+  </Directory>
+</VirtualHost>

@@ -1,0 +1,57 @@
+version: '3.3'
+
+services:
+  drupal:
+    build:
+      context: .
+      dockerfile: Dockerfile-drupal
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./drupal:/var/www/drupal
+      - ./etc/php/drupal.php.ini:/usr/local/etc/php/conf.d/drupal.php.ini
+    depends_on:
+      - db
+    links:
+      - db
+
+  drush:
+    build:
+      context: .
+      dockerfile: Dockerfile-drush
+    volumes:
+      - ./drupal:/var/www/drupal
+      - ./etc/php/drush.php.ini:/usr/local/etc/php/conf.d/drush.php.ini
+
+  pma:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: drupal
+    links:
+      - db:db
+
+  db:
+    image: mariadb:latest
+    ports:
+      - 3306:3306
+    command: [
+        '--default_authentication_plugin=mysql_native_password',
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci'
+    ]
+    volumes:
+      - ./drupal/data:/docker-entrypoint-initdb.d
+      - mysqldata:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: drupal
+      MYSQL_ROOT_PASSWORD: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+
+volumes:
+  mysqldata:

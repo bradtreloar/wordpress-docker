@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  become: yes
+
+  vars_files:
+    - config.yml
+
+  tasks:
+
+    - name: Add apache vhosts configuration.
+      template:
+        src: "{{ playbook_dir }}/templates/apache_vhosts.conf.j2"
+        dest: "/etc/apache2/sites-available/vhosts.conf"
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Add vhost symlink in sites-enabled.
+      file:
+        src: "/etc/apache2/sites-available/vhosts.conf"
+        dest: "/etc/apache2/sites-enabled/vhosts.conf"
+        state: link
+
+    - name: Remove default vhost in sites-enabled.
+      file:
+        path: "/etc/apache2/sites-enabled/000-default.conf"
+        state: absent
