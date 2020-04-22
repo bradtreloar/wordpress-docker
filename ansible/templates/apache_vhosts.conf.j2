@@ -12,4 +12,7 @@ DirectoryIndex index.php index.html
     Options -Indexes +FollowSymLinks
     Require all granted
   </Directory>
+  # <FilesMatch \.php$>
+  #   SetHandler "proxy:fcgi://127.0.0.1:9000"
+  # </FilesMatch>
 </VirtualHost>
