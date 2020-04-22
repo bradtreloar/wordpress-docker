@@ -23,6 +23,10 @@ services:
     volumes:
       - ./drupal:/var/www/drupal
       - ./etc/php/drush.php.ini:/usr/local/etc/php/conf.d/drush.php.ini
+    depends_on:
+      - db
+    links:
+      - db
 
   pma:
     image: phpmyadmin/phpmyadmin
@@ -32,8 +36,10 @@ services:
       PMA_HOST: db
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: drupal
+    depends_on:
+      - db
     links:
-      - db:db
+      - db
 
   db:
     image: mariadb:latest
@@ -45,7 +51,6 @@ services:
         '--collation-server=utf8mb4_unicode_ci'
     ]
     volumes:
-      - ./drupal/data:/docker-entrypoint-initdb.d
       - mysqldata:/var/lib/mysql
     environment:
       MYSQL_DATABASE: drupal
