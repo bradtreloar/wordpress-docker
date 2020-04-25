@@ -1,7 +1,7 @@
 DirectoryIndex index.php index.html
 
 <VirtualHost *:80>
-  ServerName {{ hostnames[0] }}.test
+  ServerName {{ hostnames[0] }}
 {% for hostname in hostnames %}
   ServerAlias {{ hostname }}
 {% endfor %}
