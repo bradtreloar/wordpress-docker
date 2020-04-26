@@ -1,15 +1,16 @@
-FROM php:7.3
+FROM php:cli
 LABEL maintainer="Brad Treloar"
 WORKDIR /var/www/drupal
-
-# Use bash instead of sh.
-SHELL ["/bin/bash", "-c"]
 
 # Install PHP extensions
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Set working directory.
-# (Also creates Drupal web directory so Apache restart won't fail.)
-WORKDIR /var/www/drupal
+# Install Git
+RUN apt-get update && apt-get install -qy git
 
-ENTRYPOINT ["/var/www/drupal/vendor/bin/drush"]
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install Drush globally and set it as the entrypoint.
+RUN composer global require drush/drush
+ENTRYPOINT ["/root/.composer/vendor/bin/drush"]
