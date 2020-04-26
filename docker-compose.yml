@@ -1,16 +1,26 @@
 version: '3.3'
 
 services:
-  drupal:
+
+  httpd:
     build:
       context: .
-      dockerfile: drupal.Dockerfile
+      dockerfile: httpd.Dockerfile
     ports:
       - 80:80
       - 443:443
     volumes:
       - ./drupal:/var/www/drupal
-      - ./etc/php/drupal.php.ini:/usr/local/etc/php/conf.d/drupal.php.ini
+    depends_on:
+      - db
+      - phpfpm
+
+  phpfpm:
+    build:
+      context: .
+      dockerfile: phpfpm.Dockerfile
+    volumes:
+      - ./drupal:/var/www/drupal
     depends_on:
       - db
 

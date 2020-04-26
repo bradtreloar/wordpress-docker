@@ -19,6 +19,6 @@ DirectoryIndex index.php index.html
 
   # PHP FPM handles all PHP requests.
   <FilesMatch \.php$>
-    SetHandler "proxy:fcgi://127.0.0.1:9000"
+    SetHandler "proxy:fcgi://phpfpm:9000"
   </FilesMatch>
 </VirtualHost>
