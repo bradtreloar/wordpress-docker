@@ -2,15 +2,27 @@ FROM php:cli
 LABEL maintainer="Brad Treloar"
 WORKDIR /var/www/drupal
 
+# Create user www-data with same UID:GID as host user.
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+RUN userdel -f www-data &&\ 
+    if getent group www-data ; then groupdel www-data; fi &&\
+    groupadd -g ${GROUP_ID} www-data &&\
+    useradd -l -u ${USER_ID} -g www-data www-data &&\
+    install -d -m 0755 -o www-data -g www-data /home/www-data &&\
+    chown --changes --no-dereference --recursive --from=33:33 ${USER_ID}:${GROUP_ID} /home/www-data
+
+
 # Install PHP extensions
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Install Git
-RUN apt-get update && apt-get install -qy git
+# Install required packages.
+RUN apt-get update && apt-get install -qy git zip mariadb-client
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install Drush globally and set it as the entrypoint.
+USER www-data
 RUN composer global require drush/drush
-ENTRYPOINT ["/root/.composer/vendor/bin/drush"]
+ENTRYPOINT ["/home/www-data/.composer/vendor/bin/drush"]
