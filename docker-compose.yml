@@ -19,6 +19,9 @@ services:
     build:
       context: .
       dockerfile: phpfpm.Dockerfile
+      args:
+        USER_ID: ${USER_ID}
+        GROUP_ID: ${GROUP_ID}
     volumes:
       - ./drupal:/var/www/drupal
     depends_on:
@@ -28,6 +31,9 @@ services:
     build:
       context: .
       dockerfile: drush.Dockerfile
+      args:
+        USER_ID: ${USER_ID}
+        GROUP_ID: ${GROUP_ID}
     volumes:
       - ./drupal:/var/www/drupal
       - ./etc/php/drush.php.ini:/usr/local/etc/php/conf.d/drush.php.ini
