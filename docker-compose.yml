@@ -12,7 +12,6 @@ services:
     volumes:
       - ./drupal:/var/www/drupal
     depends_on:
-      - db
       - phpfpm
 
   phpfpm:
