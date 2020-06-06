@@ -17,4 +17,9 @@ RUN apt-get update -y && apt-get install -y \
     libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev
 
 # Install PHP extensions
-RUN docker-php-ext-install mysqli pdo pdo_mysql opcache gd
+RUN docker-php-ext-configure gd \
+    --with-webp \
+    --with-jpeg \
+    --with-xpm \
+    --with-freetype
+RUN docker-php-ext-install bcmath mysqli pdo pdo_mysql opcache gd

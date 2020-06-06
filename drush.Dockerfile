@@ -12,9 +12,17 @@ RUN userdel -f www-data &&\
     install -d -m 0755 -o www-data -g www-data /home/www-data &&\
     chown --changes --no-dereference --recursive --from=33:33 ${USER_ID}:${GROUP_ID} /home/www-data
 
+# Install GD dependencies
+RUN apt-get update -y && apt-get install -y \
+    libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev
 
 # Install PHP extensions
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+RUN docker-php-ext-configure gd \
+    --with-webp \
+    --with-jpeg \
+    --with-xpm \
+    --with-freetype
+RUN docker-php-ext-install mysqli pdo pdo_mysql opcache gd
 
 # Install required packages.
 RUN apt-get update && apt-get install -qy git zip mariadb-client
