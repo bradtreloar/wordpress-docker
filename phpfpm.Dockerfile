@@ -22,4 +22,4 @@ RUN docker-php-ext-configure gd \
     --with-jpeg \
     --with-xpm \
     --with-freetype
-RUN docker-php-ext-install bcmath mysqli pdo pdo_mysql opcache gd
+RUN docker-php-ext-install bcmath gd mysqli opcache pdo pdo_mysql

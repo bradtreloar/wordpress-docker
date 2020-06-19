@@ -15,7 +15,7 @@ RUN userdel -f www-data &&\
 # Install required packages.
 RUN apt-get update -y && apt-get install -qy \
     libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev \
-    git zip mariadb-client
+    git zip mariadb-client zlib1g-dev
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd \
@@ -25,6 +25,6 @@ RUN docker-php-ext-configure gd \
     --with-freetype
 RUN docker-php-ext-install bcmath gd mysqli opcache pdo pdo_mysql
 
-# Set Drush as the entrypoint.
+# Set Drupal Console as the entrypoint.
 USER www-data
 ENTRYPOINT ["/var/www/drupal/vendor/bin/drupal"]
