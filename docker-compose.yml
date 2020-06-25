@@ -48,7 +48,7 @@ services:
         GROUP_ID: 1000
     volumes:
       - ./drupal:/var/www/drupal
-      - ../etc/php/drush.php.ini:/usr/local/etc/php/conf.d/cli.php.ini
+      - ./etc/php/console.php.ini:/usr/local/etc/php/conf.d/cli.php.ini
     depends_on:
       - db
 
