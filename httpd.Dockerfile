@@ -8,9 +8,8 @@ RUN echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" > /et
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
 RUN apt-get update && apt-get install -qy ansible
 
-# Copy Ansible configuration and playbook, then run playbook
+# Copy and run Ansible playbook
 COPY ./ansible/ /ansible
-COPY ./config.yml /ansible/config.yml
 RUN ansible-playbook /ansible/drupal.yml
 
 # Enable clean URLs
