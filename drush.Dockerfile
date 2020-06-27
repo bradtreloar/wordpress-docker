@@ -27,4 +27,4 @@ RUN docker-php-ext-install bcmath gd mysqli opcache pdo pdo_mysql
 
 # Set Drush as the entrypoint.
 USER www-data
-ENTRYPOINT ["/var/www/drupal/vendor/bin/drupal"]
+ENTRYPOINT ["/var/www/drupal/vendor/bin/drush"]
