@@ -77,8 +77,6 @@ services:
       - ../etc/php/pma.php.ini:/usr/local/etc/php/conf.d/pma.php.ini
     depends_on:
       - db
-    links:
-      - db
 
   db:
     image: mariadb:latest
