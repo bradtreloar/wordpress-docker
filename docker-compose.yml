@@ -35,7 +35,7 @@ services:
         GROUP_ID: 1000
     volumes:
       - ./drupal:/var/www/drupal
-      - ./etc/php/drush.php.ini:/usr/local/etc/php/conf.d/cli.php.ini
+      - ./etc/php/cli.php.ini:/usr/local/etc/php/conf.d/cli.php.ini
     depends_on:
       - db
 
@@ -48,7 +48,20 @@ services:
         GROUP_ID: 1000
     volumes:
       - ./drupal:/var/www/drupal
-      - ./etc/php/console.php.ini:/usr/local/etc/php/conf.d/cli.php.ini
+      - ./etc/php/cli.php.ini:/usr/local/etc/php/conf.d/cli.php.ini
+    depends_on:
+      - db
+
+  test:
+    build:
+      context: .
+      dockerfile: phpunit.Dockerfile
+      args:
+        USER_ID: 1000
+        GROUP_ID: 1000
+    volumes:
+      - ./drupal:/var/www/drupal
+      - ../etc/php/cli.php.ini:/usr/local/etc/php/conf.d/cli.php.ini
     depends_on:
       - db
 
@@ -60,6 +73,8 @@ services:
       PMA_HOST: db
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: drupal
+    volumes:
+      - ../etc/php/pma.php.ini:/usr/local/etc/php/conf.d/pma.php.ini
     depends_on:
       - db
     links:
