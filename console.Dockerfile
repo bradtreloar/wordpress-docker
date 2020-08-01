@@ -3,8 +3,8 @@ LABEL maintainer="Brad Treloar"
 WORKDIR /var/www/drupal
 
 # Create user www-data with same UID:GID as host user.
-ARG USER_ID=1000
-ARG GROUP_ID=1000
+ARG USER_ID
+ARG GROUP_ID
 RUN userdel -f www-data &&\ 
     if getent group www-data ; then groupdel www-data; fi &&\
     groupadd -g ${GROUP_ID} www-data &&\
