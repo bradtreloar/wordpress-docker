@@ -2,15 +2,10 @@ FROM php:apache
 LABEL maintainer="Brad Treloar"
 WORKDIR /var/www/drupal/web
 
-# Install Ansible
-RUN apt-get update && apt-get install -qy gnupg2
-RUN echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" > /etc/apt/sources.list.d/ansible.list
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
-RUN apt-get update && apt-get install -qy ansible
-
-# Copy and run Ansible playbook
-COPY ./ansible/ /ansible
-RUN ansible-playbook /ansible/drupal.yml
+# Install Apache config.
+COPY ./etc/apache/vhosts.conf /etc/apache2/sites-available/vhosts.conf
+RUN ln -s /etc/apache2/sites-available/vhosts.conf /etc/apache2/sites-enabled/vhosts.conf
+RUN rm -f /etc/apache2/sites-enabled/000-default.conf
 
 # Enable clean URLs
 RUN a2enmod rewrite
