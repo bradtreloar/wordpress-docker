@@ -12,9 +12,10 @@ RUN userdel -f www-data &&\
     install -d -m 0755 -o www-data -g www-data /home/www-data &&\
     chown --changes --no-dereference --recursive --from=33:33 ${USER_ID}:${GROUP_ID} /home/www-data
 
-# Install GD dependencies
-RUN apt-get update -y && apt-get install -y \
-    libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev
+# Install required packages.
+RUN apt-get update -y && apt-get install -qy \
+    libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev \
+    git zip mariadb-client zlib1g-dev
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd \
