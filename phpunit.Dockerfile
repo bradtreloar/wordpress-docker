@@ -23,7 +23,7 @@ RUN docker-php-ext-configure gd \
     --with-jpeg \
     --with-xpm \
     --with-freetype
-RUN docker-php-ext-install mysqli pdo pdo_mysql gd opcache
+RUN docker-php-ext-install bcmath mysqli pdo pdo_mysql gd opcache
 
 # Set PHPUnit as the entrypoint.
 USER www-data
