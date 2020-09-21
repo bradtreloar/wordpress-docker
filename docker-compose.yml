@@ -52,7 +52,7 @@ services:
     depends_on:
       - db
 
-  test:
+  phpunit:
     build:
       context: .
       dockerfile: phpunit.Dockerfile
