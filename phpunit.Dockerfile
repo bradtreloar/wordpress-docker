@@ -25,6 +25,9 @@ RUN docker-php-ext-configure gd \
     --with-freetype
 RUN docker-php-ext-install bcmath mysqli pdo pdo_mysql gd opcache
 
+# Install XDebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
 # Set PHPUnit as the entrypoint.
 USER www-data
 ENTRYPOINT ["/var/www/drupal/vendor/bin/phpunit"]

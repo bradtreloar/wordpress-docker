@@ -23,6 +23,7 @@ services:
         GROUP_ID: 1000
     volumes:
       - ./drupal:/var/www/drupal
+      - ./etc/php/xdebug.php.ini:/usr/local/etc/php/conf.d/xdebug.php.ini
     depends_on:
       - db
 
@@ -62,6 +63,7 @@ services:
     volumes:
       - ./drupal:/var/www/drupal
       - ./etc/php/cli.php.ini:/usr/local/etc/php/conf.d/cli.php.ini
+      - ./etc/php/xdebug.php.ini:/usr/local/etc/php/conf.d/xdebug.php.ini
     depends_on:
       - db
 

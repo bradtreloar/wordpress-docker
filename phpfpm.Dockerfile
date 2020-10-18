@@ -24,3 +24,6 @@ RUN docker-php-ext-configure gd \
     --with-xpm \
     --with-freetype
 RUN docker-php-ext-install bcmath gd mysqli opcache pdo pdo_mysql
+
+# Install XDebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
