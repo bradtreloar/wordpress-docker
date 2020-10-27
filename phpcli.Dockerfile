@@ -1,16 +1,17 @@
 FROM php:cli
 LABEL maintainer="Brad Treloar"
-WORKDIR /var/www/drupal
+WORKDIR /var/www/drupal/web
 
 # Create user www-data with same UID:GID as host user.
-ARG USER_ID
-ARG GROUP_ID
+ARG USER_ID=1000
+ARG GROUP_ID=1000
 RUN userdel -f www-data &&\ 
     if getent group www-data ; then groupdel www-data; fi &&\
     groupadd -g ${GROUP_ID} www-data &&\
     useradd -l -u ${USER_ID} -g www-data www-data &&\
     install -d -m 0755 -o www-data -g www-data /home/www-data &&\
     chown --changes --no-dereference --recursive --from=33:33 ${USER_ID}:${GROUP_ID} /home/www-data
+USER www-data
 
 # Install required packages.
 RUN apt-get update -y && apt-get install -qy \
@@ -23,8 +24,7 @@ RUN docker-php-ext-configure gd \
     --with-jpeg \
     --with-xpm \
     --with-freetype
-RUN docker-php-ext-install bcmath gd mysqli opcache pdo pdo_mysql
+RUN docker-php-ext-install bcmath mysqli pdo pdo_mysql gd opcache
 
-# Set Drupal Console as the entrypoint.
-USER www-data
-ENTRYPOINT ["/var/www/drupal/vendor/bin/drupal"]
+# Install XDebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug

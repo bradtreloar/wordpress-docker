@@ -27,36 +27,10 @@ services:
     depends_on:
       - db
 
-  drush:
+  phpcli:
     build:
       context: .
-      dockerfile: drush.Dockerfile
-      args:
-        USER_ID: 1000
-        GROUP_ID: 1000
-    volumes:
-      - ./drupal:/var/www/drupal
-      - ./etc/php/cli.php.ini:/usr/local/etc/php/conf.d/cli.php.ini
-    depends_on:
-      - db
-
-  console:
-    build:
-      context: .
-      dockerfile: console.Dockerfile
-      args:
-        USER_ID: 1000
-        GROUP_ID: 1000
-    volumes:
-      - ./drupal:/var/www/drupal
-      - ./etc/php/cli.php.ini:/usr/local/etc/php/conf.d/cli.php.ini
-    depends_on:
-      - db
-
-  phpunit:
-    build:
-      context: .
-      dockerfile: phpunit.Dockerfile
+      dockerfile: phpcli.Dockerfile
       args:
         USER_ID: 1000
         GROUP_ID: 1000
