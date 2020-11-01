@@ -2,18 +2,6 @@
 
 Docker development environment for Drupal.
 
-## Containers
-
-This environment creates a separate container for each service and utility:
-
-- Apache httpd (handles HTTP requests)
-- PHP-FPM proxy (httpd delegates requests for PHP resources to this handler)
-- Drush
-- Drupal Console
-- PHPUnit
-- phpMyAdmin
-- MariaDB
-
 ## Setup
 
 1. Clone this repo to your project directory.
@@ -34,21 +22,21 @@ For convenience, a script called `dockrun` is included that runs `sudo docker-co
 
 ```bash
 # Get the status of your site.
-dockrun drush st
+dockrun phpcli drush st
 ```
 
 ### Drupal Console
 
 ```bash
 # Generate a module.
-dockrun console generate:module
+dockrun phpcli drupal generate:module
 ```
 
 ### PHPUnit
 
 ```bash
 # Run tests for a custom module.
-dockrun phpunit --group="mymodule"
+dockrun phpcli phpunit --group="mymodule"
 ```
 
 ## Using XDebug
