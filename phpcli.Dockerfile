@@ -29,3 +29,4 @@ RUN docker-php-ext-install bcmath mysqli pdo pdo_mysql gd opcache
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 USER www-data
+ENV PATH=${PATH}:/var/www/drupal/vendor/bin
