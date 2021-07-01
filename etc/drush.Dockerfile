@@ -1,4 +1,4 @@
-FROM php:cli
+FROM php:7.4-cli
 LABEL maintainer="Brad Treloar"
 WORKDIR /var/www/drupal/web
 
@@ -30,3 +30,4 @@ RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 USER www-data
 ENV PATH=${PATH}:/var/www/drupal/vendor/bin
+ENTRYPOINT [ "drush" ]

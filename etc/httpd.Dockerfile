@@ -1,4 +1,4 @@
-FROM php:apache
+FROM php:7.4-apache
 LABEL maintainer="Brad Treloar"
 WORKDIR /var/www/drupal/web
 

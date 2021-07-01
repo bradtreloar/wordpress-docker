@@ -1,11 +1,10 @@
-version: '3.3'
+version: "3.3"
 
 services:
-
   httpd:
     build:
       context: .
-      dockerfile: httpd.Dockerfile
+      dockerfile: ./etc/httpd.Dockerfile
     ports:
       - 80:80
       - 443:443
@@ -17,7 +16,7 @@ services:
   phpfpm:
     build:
       context: .
-      dockerfile: phpfpm.Dockerfile
+      dockerfile: ./etc/phpfpm.Dockerfile
       args:
         USER_ID: 1000
         GROUP_ID: 1000
@@ -28,13 +27,15 @@ services:
     depends_on:
       - db
 
-  phpcli:
+  drush:
     build:
       context: .
-      dockerfile: phpcli.Dockerfile
+      dockerfile: ./etc/drush.Dockerfile
       args:
         USER_ID: 1000
         GROUP_ID: 1000
+    environment:
+      - XDEBUG_TRIGGER
     volumes:
       - ./drupal:/var/www/drupal
       - ./etc/php/cli.php.ini:/usr/local/etc/php/conf.d/cli.php.ini
@@ -57,11 +58,12 @@ services:
 
   db:
     image: mariadb:latest
-    command: [
-        '--default_authentication_plugin=mysql_native_password',
-        '--character-set-server=utf8mb4',
-        '--collation-server=utf8mb4_unicode_ci'
-    ]
+    command:
+      [
+        "--default_authentication_plugin=mysql_native_password",
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+      ]
     volumes:
       - mysqldata:/var/lib/mysql
     environment:
