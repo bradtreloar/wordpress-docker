@@ -1,6 +1,6 @@
 FROM php:7.4-apache
 LABEL maintainer="Brad Treloar"
-WORKDIR /var/www/drupal/web
+WORKDIR /var/www/wordpress/web
 
 # Install Apache config.
 COPY ./etc/apache/vhosts.conf /etc/apache2/sites-available/vhosts.conf

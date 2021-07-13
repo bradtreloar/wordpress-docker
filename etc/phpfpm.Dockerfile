@@ -1,6 +1,6 @@
 FROM php:7.4-fpm
 LABEL maintainer="Brad Treloar"
-WORKDIR /var/www/drupal/web
+WORKDIR /var/www/wordpress/web
 
 # Create user www-data with same UID:GID as host user.
 ARG USER_ID

@@ -1,6 +1,6 @@
 FROM php:7.4-cli
 LABEL maintainer="Brad Treloar"
-WORKDIR /var/www/drupal/web
+WORKDIR /var/www/wordpress/web
 
 # Create user www-data with same UID:GID as host user.
 ARG USER_ID
@@ -29,5 +29,5 @@ RUN docker-php-ext-install bcmath mysqli pdo pdo_mysql gd opcache
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 USER www-data
-ENV PATH=${PATH}:/var/www/drupal/vendor/bin
-ENTRYPOINT [ "drush" ]
+ENV PATH=${PATH}:/var/www/wordpress/vendor/bin
+ENTRYPOINT [ "wp" ]

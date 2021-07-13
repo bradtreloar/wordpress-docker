@@ -9,7 +9,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./drupal:/var/www/drupal
+      - ./wordpress:/var/www/wordpress
     depends_on:
       - phpfpm
 
@@ -21,23 +21,23 @@ services:
         USER_ID: 1000
         GROUP_ID: 1000
     volumes:
-      - ./drupal:/var/www/drupal
+      - ./wordpress:/var/www/wordpress
       - ./etc/php/fpm.php.ini:/usr/local/etc/php/conf.d/fpm.php.ini
       - ./etc/php/xdebug.php.ini:/usr/local/etc/php/conf.d/xdebug.php.ini
     depends_on:
       - db
 
-  drush:
+  wpcli:
     build:
       context: .
-      dockerfile: ./etc/drush.Dockerfile
+      dockerfile: ./etc/wpcli.Dockerfile
       args:
         USER_ID: 1000
         GROUP_ID: 1000
     environment:
       - XDEBUG_TRIGGER
     volumes:
-      - ./drupal:/var/www/drupal
+      - ./wordpress:/var/www/wordpress
       - ./etc/php/cli.php.ini:/usr/local/etc/php/conf.d/cli.php.ini
       - ./etc/php/xdebug.php.ini:/usr/local/etc/php/conf.d/xdebug.php.ini
     depends_on:
@@ -50,7 +50,7 @@ services:
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: drupal
+      MYSQL_ROOT_PASSWORD: wordpress
     volumes:
       - ./etc/php/pma.php.ini:/usr/local/etc/php/conf.d/pma.php.ini
     depends_on:
@@ -67,10 +67,10 @@ services:
     volumes:
       - mysqldata:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: drupal
-      MYSQL_ROOT_PASSWORD: drupal
-      MYSQL_USER: drupal
-      MYSQL_PASSWORD: drupal
+      MYSQL_DATABASE: wordpress
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
 
 volumes:
   mysqldata:
