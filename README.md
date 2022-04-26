@@ -18,11 +18,11 @@ For convenience, this command is included as a script called `dockup`, which you
 
 ## Using WP CLI
 
-For convenience, a script called `dockrun` is included that runs `sudo docker-compose run --rm`, and takes care of setting `USER_ID` and `GROUP_ID`.
+For convenience, a script called `dockwpcli` is included that runs `sudo docker-compose run --rm wpcli`, and takes care of setting `USER_ID` and `GROUP_ID`.
 
 ```bash
 # Get the status of your site.
-dockrun wpcli st
+dockwpcli st
 ```
 
 ## Using XDebug
